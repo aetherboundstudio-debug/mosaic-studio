@@ -14,6 +14,47 @@ const TIPS: Tip[] = [
   { n: '06', title: 'Your files stay yours', body: 'Photos, clips and PDFs are opened straight from your device and never uploaded. The only moment anything leaves is if you deliberately connect your own AI provider in Setup.' },
 ];
 
+interface Guide { id: string; steps: string[]; }
+
+/** Plain-language "what do I actually click" walkthrough for each tool. */
+const GUIDES: Guide[] = [
+  { id: 'photo', steps: [
+    'Press Open and choose a picture from your device.',
+    'Drag the sliders — Exposure makes it brighter, Contrast makes it punchier, Warmth makes it more orange or more blue.',
+    'Not sure? Tap a Look along the top for a one-press style, then fine-tune from there.',
+    'Press and hold the compare button any time to see the untouched original.',
+    'Happy with it? Press Export to save the new picture to your device.',
+  ] },
+  { id: 'draw', steps: [
+    'Pick a brush, a size and a colour, then draw straight onto the canvas.',
+    'Use layers like sheets of tracing paper: sketch on one, colour on another. You can hide or redraw one without harming the rest.',
+    'Got it wrong? Ctrl + Z (or Cmd + Z on a Mac) steps backwards as many times as you need.',
+    'Export gives you a PNG. Turn the background layer off first if you want it see-through.',
+  ] },
+  { id: 'design', steps: [
+    'Start from a template, or pick the size you need — Instagram post, A4, YouTube thumbnail and so on.',
+    'Add text and shapes, then drag them around. They snap into line with each other automatically.',
+    'Click anything to change its colour, font or size in the panel on the side.',
+    'Export as a picture to post online, or as a PDF if it is going to a printer.',
+  ] },
+  { id: 'motion', steps: [
+    'Type your words, then choose an animation and how it should move.',
+    'Press play to preview it, or drag along the timeline to scrub through by hand.',
+    'Export as WebM for a real video file, or as a GIF for a short looping clip.',
+  ] },
+  { id: 'video', steps: [
+    'Open a video clip from your device.',
+    'Drag the two handles under the filmstrip to mark where the clip should start and end.',
+    'Optionally change the colours, the speed, or mute the sound.',
+    'Export writes a genuinely new, shorter file — it is not just hiding the ends.',
+  ] },
+  { id: 'pdf', steps: [
+    'Open one PDF, or several at once if you want to join them together.',
+    'Every page appears as a thumbnail. Drag them to reorder, or use the buttons to rotate and delete.',
+    'Export the whole thing as one PDF, or tick a few pages and export only those.',
+  ] },
+];
+
 const SHORTCUTS: Array<[string, string]> = [
   ['⌘/Ctrl + Z', 'Undo'],
   ['⌘/Ctrl + Shift + Z', 'Redo'],
@@ -37,6 +78,28 @@ export function renderLearn(): void {
       ),
     ),
   );
+
+  page.appendChild(h('div.section-head', null,
+    h('h2', null, 'How each tool works'),
+    h('span.hint', null, 'No jargon'),
+  ));
+  for (const guide of GUIDES) {
+    const tool = TOOLS.find((t) => t.id === guide.id);
+    if (!tool) continue;
+    const steps = h('ol.guide-steps');
+    for (const step of guide.steps) steps.appendChild(h('li', null, step));
+
+    const open = button(`Open ${tool.name}`, { icon: tool.icon, onClick: () => navigate(tool.path) });
+    page.appendChild(
+      h('section.panel.guide-card', null,
+        h('div.guide-head', null,
+          h('span', { class: `tool-icon ${tool.color}` }, icon(tool.icon)),
+          h('div', null, h('strong', null, tool.name), h('small', null, tool.desc)),
+        ),
+        h('div.panel-body', null, steps, open),
+      ),
+    );
+  }
 
   page.appendChild(h('div.section-head', null, h('h2', null, 'Six habits that help')));
   for (const t of TIPS) {
