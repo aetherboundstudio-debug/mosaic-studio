@@ -60,8 +60,11 @@ const SHORTCUTS: Array<[string, string]> = [
   ['⌘/Ctrl + Shift + Z', 'Redo'],
   ['⌘/Ctrl + S', 'Save project'],
   ['⌘/Ctrl + E', 'Export / download'],
-  ['[ and ]', 'Brush size down / up'],
-  ['Space + drag', 'Pan the canvas'],
+  ['[ and ]', 'Brush size down / up — Paint'],
+  ['B and E', 'Brush / eraser — Paint'],
+  ['Arrows, Delete', 'Nudge / remove selection — Design'],
+  ['Space', 'Play or pause — Motion and Video'],
+  ['I and O', 'Set start / end point — Video'],
 ];
 
 export function renderLearn(): void {
