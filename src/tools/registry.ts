@@ -19,7 +19,7 @@ export const TOOLS: ToolMeta[] = [
     icon: 'photo',
     color: 'pink',
     path: '/photo',
-    features: ['24 adjustments', 'Tone curve', 'Crop & straighten', 'Cutout'],
+    features: ['16 adjustments', 'Tone curve', 'Crop & straighten', 'Cutout'],
   },
   {
     id: 'draw',
