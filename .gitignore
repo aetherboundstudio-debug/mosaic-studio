@@ -1,3 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.tmp-test/
+
+# Vite
+.vite/
+*.local
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+*.log
+
 # OS files
 .DS_Store
 Thumbs.db
